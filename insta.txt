@@ -1,0 +1,29 @@
+# 1. Create directory structure
+mkdir -p spyx/templates
+cd spyx
+
+# 2. Create all files (copy the code above into respective files)
+
+# 3. Install Python dependencies
+pip3 install colorama netifaces
+
+# 4. Install system dependencies
+sudo apt-get update
+sudo apt-get install -y hostapd dnsmasq php iptables wireless-tools
+
+# 5. Make spyx.py executable
+chmod +x spyx.py
+
+# 6. Run the tool
+sudo python3 spyx.py
+# Update package list
+sudo apt-get update
+
+# Install Python pip if not installed
+sudo apt-get install -y python3-pip
+
+# Install system tools required by SpyX
+sudo apt-get install -y hostapd dnsmasq php iptables wireless-tools aircrack-ng
+
+# Install Python packages
+sudo pip3 install colorama netifaces scapy flask flask-cors pyric requests python-nmap tabulate termcolor pycryptodome

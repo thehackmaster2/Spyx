@@ -1,0 +1,22 @@
+# 1. Create directory
+mkdir -p spyx/templates spyx/logs
+cd spyx
+
+# 2. Create all files (copy the code above)
+
+# 3. Make executable
+chmod +x spyx.py
+
+# 4. Install dependencies
+sudo bash setup.sh
+
+# 5. Run the tool
+sudo python3 spyx.py
+
+# 6. Follow prompts:
+#    - Enter WiFi name (e.g., "Free_WiFi")
+#    - Select template number
+#    - Tool will start automatically
+#    - Connect from your test device
+#    - When credentials captured, you'll see them in console
+#    - Press Ctrl+C to stop and restore everything
